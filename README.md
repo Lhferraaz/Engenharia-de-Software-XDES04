@@ -24,5 +24,5 @@ Todos os documentos listados abaixo estão localizados na raiz deste diretório 
 
 ## ✨ Extras em Destaque
 
-* **Documento Finalizado e Formato:** `RF-FINAL-FORMATADO.pdf` (Contém a versão formatada dos Requisitos Funcionais).
+* **Documento Finalizado e Formatado:** `RF-FINAL-FORMATADO.pdf` (Contém a versão formatada dos Requisitos Funcionais).
 * **Documento Com Link do Cronograma:** `CronogramaTrello.pdf` (Contém o link para o cronograma de desenvolvimento, geralmente no Trello).
