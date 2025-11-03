@@ -1,18 +1,28 @@
-# Engenharia-de-Software-XDES04
+# 📦 Documentação da Release 00 (Entrega Inicial)
 
-# 📄 Repositório de Documentos de Requisitos - Loja Online
+## 📌 Sobre esta Release
 
-## 📝 Sobre o Repositório
+Esta **Release 00** representa a primeira entrega e documentação de requisitos para a Loja Online. Ela foca no estabelecimento das bases do projeto, incluindo os requisitos essenciais, rastreabilidade e planejamento inicial.
 
-Este repositório é dedicado ao **armazenamento e versionamento dos documentos de requisitos** de uma Loja Online de roupas.
-
-O objetivo principal é manter um histórico claro e acessível de todas as especificações e funcionalidades definidas para o projeto.
+Todos os documentos listados abaixo estão localizados na raiz deste diretório (ou na pasta `Release-0/` se for o caso), prontos para visualização.
 
 ---
 
-## Membros da equipe:
+## 📄 Conteúdo da Documentação (Release 00)
 
-Luiz Henrique Ferraz
-Maria Eduarda Santana
-Sofia Nogueira 
-Pedro Restani
+| Documento / Arquivo | Tipo |
+| :--- | :--- |
+| **RF-FINAL-FORMATADO.pdf** | PDF |
+| **R0DocRequisitosCRUDES.docx** | DOCX |
+| **Especificação_Relatório_Vendas_por_Região.docx** | DOCX |
+| **Commit_CRUDS_ferraz.docx** | DOCX |
+| **MatrizDeRastreabilidade.jpg** | JPG |
+| **Relatório 02.pdf** | PDF |
+| **CronogramaTrello.pdf** | PDF |
+
+---
+
+## ✨ Extras em Destaque
+
+* **Documento Finalizado e Formatado:** `RF-FINAL-FORMATADO.pdf` (Contém a versão formatada dos Requisitos Funcionais).
+* **Documento Com Link do Cronograma:** `CronogramaTrello.pdf` (Contém o link para o cronograma de desenvolvimento, geralmente no Trello).
