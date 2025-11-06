@@ -87,6 +87,10 @@ class Produto:
   contador_id = 0
 
   def __init__(self, nome, tipo, caracteristicas, marca, tamanho, cor, preco, quantidade, tecido, imagem = None):
+    contador_id += 1
+
+    
+    self.__id = contador_id
     self.__nome = nome
     self.__tipo = tipo
     self.__caracteristicas = caracteristicas
@@ -97,6 +101,10 @@ class Produto:
     self.__quantidade = quantidade
     self.__tecido = tecido
     self.__imagem = imagem
+
+  @property
+  def id(self):
+    return self.__id
 
   @property
   def id(self):
