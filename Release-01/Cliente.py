@@ -221,12 +221,43 @@ class LimiteMostraClientes():
   def __init__(self, str):
     messagebox.showinfo('Lista de alunos', str)
 
-class CtrlEstudante():
+class CtrlCliente():
   def __init__(self):
-    self.listaEstudantes = []
+    self.listaClientes = []
 
-  def insereEstudantes(self):
-    self.__limiteIns = LimiteInsereCliente
+  def insereClientes(self):
+    self.limiteIns = LimiteInsereCliente(self)
 
   def mostraClientes(self):
-    str = 'Nome -- Sobrenome -- Contato -- Genero -- Data de Nascimento -- Senha\n'
+    str = 'Nome -- Sobrenome -- Contato -- Genero -- Data de Nascimento\n'
+    for cli in self.listaClientes:
+      str += cli.nome + ' -- ' + cli.sobrenome + ' -- ' + cli.contato + ' -- ' + cli.genero + ' -- ' + cli.data_nasc + '\n'
+    self.limiteLista = LimiteMostraClientes(str)
+
+  def enterHandler(self, event):
+    nome = self.limiteIns.inputNome.get()
+    sobrenome = self.limiteIns.inputSobrenome.get()
+    contato = self.limiteIns.inputContato.get()
+    genero = self.limiteIns.inputGenero.get()
+    data_nasc = self.limiteIns.inputData_nasc.get()
+    senha = self.limiteIns.inputSenha.get()
+
+    if nome == '' or sobrenome == '' or contato == '' or genero == '' or data_nasc == '' or senha == '': 
+      self.limiteIns.mostraJanela('Erro', 'Preencha todos os campos')
+      return
+    
+    cliente = Cliente(nome, sobrenome, contato, genero, data_nasc, senha)
+    self.listaClientes.append(cliente)
+    self.limiteIns.mostraJanela('Sucesso', 'Cliente cadastrado com sucesso')
+    self.clearHandler(event)
+
+  def clearHandler(self, event):
+    self.limiteIns.inputNome.delete(0, len(self.limiteIns.inputNome.get()))
+    self.limiteIns.inputSobrenome.delete(0, len(self.limiteIns.inputSobrenome.get()))
+    self.limiteIns.inputContato.delete(0, len(self.limiteIns.inputContato.get()))
+    self.limiteIns.inputGenero.delete(0, len(self.limiteIns.inputGenero.get()))
+    self.limiteIns.inputData_nasc.delete(0, len(self.limiteIns.inputData_nasc.get()))
+    self.limiteIns.inputSenha.delete(0, len(self.limiteIns.inputSenha.get()))
+
+  def fechaHandler(self, event):
+    self.limiteIns.destroy()
