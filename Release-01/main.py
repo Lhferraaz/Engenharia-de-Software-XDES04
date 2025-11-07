@@ -19,33 +19,34 @@ class LimitePrincipal:
     
     self.root.config(menu=self.menubar)
 
-    # Widgets para Estética
-
-    self.frame_principal = tk.Frame(self.root, padx = 20, pady = 30)
-    self.frame_principal.pack(expand=True, fill=tk.BOTH)
-
-    # Título
-
-    self.label_titulo = tk.Label(self.frame_principal, text = "Bem-vindo a Loja Online",
-                                 font=("Helvetica", 14, "bold"))
-    self.label_titulo.pack(pady = 10)
-
-    self.label_desc = tk.Label(self.frame_principal,
-                               text="Use o menu 'Cliente' para \n" \
-                               "cadastrar ou listar clientes.",
-                               font = ("Helvetica", 10),
-                               justify = tk.LEFT)
-    self.label_desc.pack(pady = 5)   
 class ControlePrincipal():
   def __init__(self):
     self.root = tk.Tk()
 
+
+    # Passa o self (ControlePrincipal) para o CtrlCliente
+    # para que ele possa acessar o root se precisar
     self.ctrlCliente = cli.CtrlCliente()
 
     self.limite = LimitePrincipal(self.root, self)
 
     self.root.title("Loja Online")
+
+    self.centralizar_janela(self.root)
+
     self.root.mainloop()
+
+  # Função para centralizar a janela
+
+  def centralizar_janela(self, janela):
+     janela.update_idletasks()
+     largura = janela.winfo_width()
+     altura = janela.winfo_height()
+
+     x = (janela.winfo_screenwidth() // 2) - (largura // 2)
+     y = (janela.winfo_screenheight() // 2) - (altura // 2)
+
+     janela.geometry('{}x{}+{}+{}'.format(largura, altura, x, y))
 
   def insereClientes(self):
       self.ctrlCliente.insereClientes()
