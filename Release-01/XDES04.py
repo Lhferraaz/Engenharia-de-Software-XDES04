@@ -1,12 +1,25 @@
 from abc import ABC, abstractmethod
 
 class endereco:
+  contador_id = 0
+  
   def __init__(self, estado, cidade, bairro, rua_ou_avenida, numero):
+    contador_id += 1
+
+    self.__id = contador_id
     self.__estado = estado
-    self.__cidade = cidade
+    if len(cidade) < 40:
+      self.__cidade = cidade
     self.__bairro = bairro
-    self.__rua_ou_avenida = rua_ou_avenida
-    self.__numero = numero
+    if len(rua_ou_avenida) < 40:
+      self.__rua_ou_avenida = rua_ou_avenida
+    
+    if numero >= 0:
+      self.__numero = numero
+
+  @property
+  def id(self):
+    return self.__id
 
   @property
   def estado(self):
@@ -36,12 +49,16 @@ class Cliente:
     contador_id += 1
 
     self.__id = contador_id
-    self.__nome = nome
-    self.__sobrenome = sobrenome
+    if len(nome) < 40:
+      self.__nome = nome
+    if len(sobrenome) < 40:
+      self.__sobrenome = sobrenome
+
     self.__contato = contato
     self.__genero = genero
     self.__data_nasc = data_nasc
-    self.__senha = senha
+    if len(senha) < 40:
+      self.__senha = senha
     self.__endereco = endereco
 
   @property
