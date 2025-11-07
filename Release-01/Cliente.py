@@ -102,9 +102,9 @@ class Cliente:
     self.__endereco = endereco
 
 class LimiteInsereCliente(tk.Toplevel):
-  def __init__(self, controle):
-    tk.Toplevel.__init__(self)
-    self.geometry('400x600')
+  def __init__(self, controle, master_root):
+    tk.Toplevel.__init__(self, master_root)
+    self.geometry('450x650')
     self.title("Cadastrar Cliente")
 
     self.frameNome = tk.Frame(self)
