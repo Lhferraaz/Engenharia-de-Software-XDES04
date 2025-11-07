@@ -1,0 +1,6 @@
+# Ignora a pasta 'comparacao' e todo o seu conteúdo
+comparacao/
+
+# Padrões comuns para Python
+__pycache__/
+*.pyc
