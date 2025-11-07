@@ -101,77 +101,6 @@ class Cliente:
   def endereco(self, endereco):
     self.__endereco = endereco
 
-class Produto:
-  contador_id = 0
-
-  def __init__(self, nome, tipo, caracteristicas, marca, tamanho, cor, preco, quantidade, tecido, imagem = None):
-    Produto.contador_id += 1
-
-    
-    self.__id = Produto.contador_id
-    self.__nome = nome
-    self.__tipo = tipo
-    self.__caracteristicas = caracteristicas
-    self.__marca = marca
-    self.__tamanho = tamanho
-    self.__cor = cor
-    self.__preco = preco
-    self.__quantidade = quantidade
-    self.__tecido = tecido
-    self.__imagem = imagem
-
-  @property
-  def id(self):
-    return self.__id
-
-  @property
-  def id(self):
-    return self.__id
-  
-  @property
-  def nome(self):
-    return self.__nome
-  
-  @property
-  def tipo(self):
-    return self.__tipo
-  
-  @property
-  def caracteristicas(self):
-    return self.__caracteristicas
-  
-  @property
-  def marca(self):
-    return self.__marca
-  
-  @property
-  def tamanho(self):
-    return self.__tamanho
-  
-  @property
-  def cor(self):
-    return self.__cor
-  
-  @property
-  def preco(self):
-    return self.__preco
-  
-  @property
-  def quantidade(self):
-    return self.__quantidade
-  
-  @property
-  def tecido(self):
-    return self.__tecido
-  
-  @property
-  def imagem(self):
-    return self.__imagem
-  
-  @imagem.setter
-  def imagem(self, imagem):
-    self.__imagem = imagem
-
 class LimiteInsereCliente(tk.Toplevel):
   def __init__(self, controle):
     tk.Toplevel.__init__(self)
@@ -271,12 +200,6 @@ class LimiteInsereCliente(tk.Toplevel):
     self.frameBotoes = tk.Frame(self)
     self.frameBotoes.pack(pady=20)
     
-    self.buttonSalvar = tk.Button(self.frameBotoes, text="Salvar", command=self.salvarCliente)
-    self.buttonSalvar.pack(side=tk.LEFT, padx=10)
-
-    self.buttonCancela = tk.Button(self.frameBotoes, text="Cancelar", command=self.destroy)
-    self.buttonCancela.pack(side=tk.LEFT, padx=10)
-
     self.buttonSubmit = tk.Button(self, text="Enter")
     self.buttonSubmit.pack(side="left")
     self.buttonSubmit.bind("<Button>", controle.enterHandler)
@@ -286,7 +209,7 @@ class LimiteInsereCliente(tk.Toplevel):
     self.buttonClear.bind("<Button>", controle.clearHandler)
 
   def mostraCamposEndereco(self):
-    if self.checkVar.get() == True:
+    if self.checkVar.get() == True: 
       self.frameEndereco.pack(pady=10)
     else:
       self.frameEndereco.pack_forget()
