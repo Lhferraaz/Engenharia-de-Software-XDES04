@@ -1,12 +1,20 @@
+# Import das funções
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 
+# Classe Endereço
 class endereco:
+  # Aqui defino um contador e inicializo como 0
   contador_id = 0
   
   def __init__(self, estado, cidade, bairro, rua_ou_avenida, numero):
+    # Aqui eu incremento o contador a cada adição de um novo cliente
+    # Como contador_id é um atributo da classe endereco
+    # eu preciso usar endereco.contador_id para acessa-lo
     endereco.contador_id += 1
 
+    # 
     self.__id = endereco.contador_id
     self.__estado = estado
     if len(cidade) < 40:
@@ -102,117 +110,107 @@ class Cliente:
     self.__endereco = endereco
 
 class LimiteInsereCliente(tk.Toplevel):
-  def __init__(self, controle, master_root):
-    tk.Toplevel.__init__(self, master_root)
+  def __init__(self, controle):
+    tk.Toplevel.__init__(self)
     self.geometry('450x650')
     self.title("Cadastrar Cliente")
+    self.controle = controle
 
-    self.frameNome = tk.Frame(self)
-    self.frameSobrenome = tk.Frame(self)
-    self.frameContato = tk.Frame(self)
-    self.frameGenero = tk.Frame(self)
-    self.frameData_nasc = tk.Frame(self)
-    self.frameSenha = tk.Frame(self)
-    self.frameNome.pack()
-    self.frameSobrenome.pack()
-    self.frameContato.pack()
-    self.frameGenero.pack()
-    self.frameData_nasc.pack()
-    self.frameSenha.pack()
+    self.main_frame = ttk.Frame(self)
+    self.main_frame.pack(fill=tk.BOTH, expand = True, padx=15, pady=15)
 
-    self.labelNome = tk.Label(self.frameNome, text="Nome: ")
-    self.labelSobrenome = tk.Label(self.frameSobrenome, text="Sobrenome: ")
-    self.labelContato = tk.Label(self.frameContato, text="Contato: ")
-    self.labelGenero = tk.Label(self.frameGenero, text="Genero: ")
-    self.labelData_nasc = tk.Label(self.frameData_nasc, text="Data de Nascimento: ")
-    self.labelSenha = tk.Label(self.frameSenha, text="Senha: ")
-    self.labelNome.pack(side="left")
-    self.labelSobrenome.pack(side="left")
-    self.labelContato.pack(side="left")
-    self.labelGenero.pack(side="left")
-    self.labelData_nasc.pack(side="left")
-    self.labelSenha.pack(side="left")
+    self.main_frame.columnconfigure(1, weight=1)
 
-    self.inputNome = tk.Entry(self.frameNome, width=20)
-    self.inputSobrenome = tk.Entry(self.frameSobrenome, width=20)
-    self.inputContato = tk.Entry(self.frameContato, width=20)
-    self.inputGenero = tk.Entry(self.frameGenero, width=20)
-    self.inputData_nasc = tk.Entry(self.frameData_nasc, width=20)
-    self.inputSenha = tk.Entry(self.frameSenha, width=20)
-    self.inputNome.pack(side="left")
-    self.inputSobrenome.pack(side="left")
-    self.inputContato.pack(side="left")
-    self.inputGenero.pack(side="left")
-    self.inputData_nasc.pack(side="left")
-    self.inputSenha.pack(side="left")
+    self.labelNome = ttk.Label(self.main_frame, text="Nome: ")
+    self.labelNome.grid(row=0, column=0, sticky=tk.W, pady=5)
+    self.inputNome = ttk.Entry(self.main_frame, width=40)
+    self.inputNome.grid(row=0, column=1, sticky=tk.EW, pady=5)
+
+    self.labelSobrenome = ttk.Label(self.main_frame, text="Sobrenome: ")
+    self.labelSobrenome.grid(row=1, column=0, sticky=tk.W, pady=5)
+    self.inputSobrenome = ttk.Entry(self.main_frame, width=40)
+    self.inputSobrenome.grid(row=1, column=1, sticky=tk.EW, pady=5)
+
+    self.labelContato = ttk.Label(self.main_frame, text="Contato: ")
+    self.labelContato.grid(row=2, column=0, sticky=tk.W, pady=5)
+    self.inputContato = ttk.Entry(self.main_frame, width=40)
+    self.inputContato.grid(row=2, column=1, sticky=tk.EW, pady=5)
+
+    self.labelGenero = ttk.Label(self.main_frame, text="Genero: ")
+    self.labelGenero.grid(row=3, column=0, sticky=tk.W, pady=5)
+    self.inputGenero = ttk.Entry(self.main_frame, width=40)
+    self.inputGenero.grid(row=3, column=1, sticky=tk.EW, pady=5)
+
+    self.labelData_nasc = ttk.Label(self.main_frame, text="Data de Nascimento: ")
+    self.labelData_nasc.grid(row=4, column=0, sticky=tk.W, pady=5)
+    self.inputData_nasc = ttk.Entry(self.main_frame, width=40)
+    self.inputData_nasc.grid(row=4, column=1, sticky=tk.EW, pady=5)
+
+    self.labelSenha = ttk.Label(self.main_frame, text="Senha: ")
+    self.labelSenha.grid(row=5, column=0, sticky=tk.W, pady=5)
+    self.inputSenha = ttk.Entry(self.main_frame, width=40)
+    self.inputSenha.grid(row=5, column=1, sticky=tk.EW, pady=5)
 
     # ------ Separador ------
 
-    tk.Frame(self, height=2, bd=1, relief=tk.SUNKEN).pack(fill=tk.X, padx=5, pady=10)
+    separator = ttk.Separator(self.main_frame, orient ='horizontal')
+    separator.grid(row = 6, column=0, columnspan=2, sticky ='ew', pady=15)
 
     self.checkVar = tk.BooleanVar()
     self.checkVar.set(False)
+    self.checkEndereco = ttk.Checkbutton(
+      self.main_frame,
+      text="Cadastrar Endereço",
+      variable=self.checkVar,
+      command=self.mostraCamposEndereco
+    )
 
-    self.frameEndereco = tk.Frame(self)
+    self.checkEndereco.grid(row=7, column=0, columnspan=2, sticky=tk.W)
 
-    self.frameCheck = tk.Frame(self)
-    self.frameCheck.pack()
-    self.checkEndereco = tk.Checkbutton(self.frameCheck, text="Endereço"
-                                        , variable=self.checkVar, command=self.mostraCamposEndereco)
+    self.frameEndereco = ttk.Frame(self.main_frame)
+    self.frameEndereco.columnconfigure(1, weight=1)
 
-    self.checkEndereco.pack()
+    self.labelEstado = ttk.Label(self.frameEndereco, text="Estado: ")
+    self.labelEstado.grid(row=0, column=0, sticky=tk.W, pady=5)
+    self.entryEstado = ttk.Entry(self.frameEndereco, width=40)
+    self.entryEstado.grid(row=0, column=1, sticky=tk.EW, pady=5)
 
-    self.frameEstado = tk.Frame(self.frameEndereco)
-    self.frameEstado.pack(pady=5)
-    self.labelEstado = tk.Label(self.frameEstado, text="Estado: ")
-    self.labelEstado.pack(side=tk.LEFT)
-    self.entryEstado = tk.Entry(self.frameEstado, width=30)
-    self.entryEstado.pack(side=tk.LEFT)
+    self.labelCidade = ttk.Label(self.frameEndereco, text="Cidade: ")
+    self.labelCidade.grid(row=1, column=0, sticky=tk.W, pady=5)
+    self.entryCidade = ttk.Entry(self.frameEndereco, width=40)
+    self.entryCidade.grid(row=1, column=1, sticky=tk.EW, pady=5)
 
-    self.frameCidade = tk.Frame(self.frameEndereco)
-    self.frameCidade.pack(pady=5)
-    self.labelCidade = tk.Label(self.frameCidade, text="Cidade: ")
-    self.labelCidade.pack(side=tk.LEFT)
-    self.entryCidade = tk.Entry(self.frameCidade, width=30)
-    self.entryCidade.pack(side=tk.LEFT)
+    self.labelBairro = ttk.Label(self.frameEndereco, text="Bairro: ")
+    self.labelBairro.grid(row=2, column=0, sticky=tk.W, pady=5)
+    self.entryBairro = ttk.Entry(self.frameEndereco, width=40)
+    self.entryBairro.grid(row=2, column=1, sticky=tk.EW, pady=5)
 
-    self.frameBairro = tk.Frame(self.frameEndereco)
-    self.frameBairro.pack(pady=5)
-    self.labelBairro = tk.Label(self.frameBairro, text="Bairro: ")
-    self.labelBairro.pack(side=tk.LEFT)
-    self.entryBairro = tk.Entry(self.frameBairro, width=30)
-    self.entryBairro.pack(side=tk.LEFT)
+    self.labelRua = ttk.Label(self.frameEndereco, text="Rua: ")
+    self.labelRua.grid(row=3, column=0, sticky=tk.W, pady=5)
+    self.entryRua = ttk.Entry(self.frameEndereco, width=40)
+    self.entryRua.grid(row=3, column=1, sticky=tk.EW, pady=5)
 
-    self.frameRua = tk.Frame(self.frameEndereco)
-    self.frameRua.pack(pady=5)
-    self.labelRua = tk.Label(self.frameRua, text="Rua: ")
-    self.labelRua.pack(side=tk.LEFT)
-    self.entryRua = tk.Entry(self.frameRua, width=30)
-    self.entryRua.pack(side=tk.LEFT)
+    self.labelNro = ttk.Label(self.frameEndereco, text="Número: ")
+    self.labelNro.grid(row=4, column=0, sticky=tk.W, pady=5)
+    self.entryNro = ttk.Entry(self.frameEndereco, width=40)
+    self.entryNro.grid(row=4, column=1, sticky=tk.EW, pady=5)
 
-    self.frameNro = tk.Frame(self.frameEndereco)
-    self.frameNro.pack(pady=5)
-    self.labelNro = tk.Label(self.frameNro, text="Número: ")
-    self.labelNro.pack(side=tk.LEFT)
-    self.entryNro = tk.Entry(self.frameNro, width=30)
-    self.entryNro.pack(side=tk.LEFT)
+    self.frameBotoes = ttk.Frame(self.main_frame)
+    self.frameBotoes.grid(row=9, column=0, columnspan=2, sticky='e', pady=20)
 
-    self.frameBotoes = tk.Frame(self)
-    self.frameBotoes.pack(pady=20)
-    
-    self.buttonSubmit = tk.Button(self, text="Enter")
-    self.buttonSubmit.pack(side="left")
-    self.buttonSubmit.bind("<Button>", controle.enterHandler)
+    self.buttonSubmit = ttk.Button(self.frameBotoes, text="Enter", 
+                                   command=self.controle.enterHandler)
+    self.buttonSubmit.pack(side="left", padx=5)
 
-    self.buttonClear = tk.Button(self, text="Clear")
+    self.buttonClear = ttk.Button(self.frameBotoes, text="Clear",
+                                  command=self.controle.clearHandler)
     self.buttonClear.pack(side="left")
-    self.buttonClear.bind("<Button>", controle.clearHandler)
 
   def mostraCamposEndereco(self):
     if self.checkVar.get() == True: 
-      self.frameEndereco.pack(pady=10)
+      self.frameEndereco.grid(row=8, column=0, columnspan=2, sticky='ew', pady=10)
     else:
-      self.frameEndereco.pack_forget()
+      self.frameEndereco.grid_forget()
 
   def mostraJanela(self, titulo, msg):
     messagebox.showinfo(titulo, msg)
