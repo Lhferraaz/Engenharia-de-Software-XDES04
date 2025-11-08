@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 import Cliente as cli
 
 class LimitePrincipal:
@@ -7,17 +8,21 @@ class LimitePrincipal:
     self.controle = controle
     self.root = root
     self.root.geometry('300x250') # largura x altura
-    self.menubar = tk.Menu(self.root)
-    self.clienteMenu = tk.Menu(self.menubar)
-
-    self.clienteMenu.add_command(label="Insere", \
-                command=self.controle.insereClientes)
-    self.clienteMenu.add_command(label="Mostra", \
-                command=self.controle.mostraClientes)
-    self.menubar.add_cascade(label="Cliente", \
-                menu=self.clienteMenu)
     
-    self.root.config(menu=self.menubar)
+    nb = ttk.Notebook(self.root)
+
+    frameCliente = ttk.Frame(nb)
+
+    buttonClienteInserir = ttk.Button(frameCliente, text='Insere', command=self.controle.insereClientes)
+    buttonClienteMostrar = ttk.Button(frameCliente, text='Mostra', command=self.controle.mostraClientes)
+
+    buttonClienteInserir.pack(pady=10, padx=20)
+    buttonClienteMostrar.pack(pady=10, padx=20)
+
+    nb.add(frameCliente, text='Cliente')
+
+    nb.pack(expand=1, fill='both', padx=5, pady=5)
+
 
 class ControlePrincipal():
   def __init__(self):
