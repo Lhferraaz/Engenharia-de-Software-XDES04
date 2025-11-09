@@ -266,47 +266,54 @@ class LimiteInsereCliente(tk.Toplevel):
     else:
       self.frameEndereco.grid_forget()
 
-  def mostraJanela(tk.Toplevel):
-    def __init__(self, controle, listaClientes):
-      tk.Toplevel.__init__(self)
-      self.geometry('700x400')
-      self.title("Mostrar Clientes")
-      self.controle = controle
-      self.listaClientes = listaClientes
+  def mostraJanela(self, titulo, msg):
+    messagebox.showinfo(titulo, msg)
 
-      self.main_frame = ttk.Frame(self)
-      self.main_frame.pack(fill=tk.BOTH, expand = True, padx=15, pady=15)
+class LimiteMostraClientes (tk.Toplevel):
+  def __init__(self, controle, listaClientes):
+    tk.Toplevel.__init__(self)
+    self.geometry('700x400')
+    self.title("Mostrar Clientes")
+    self.controle = controle
+    self.listaClientes = listaClientes
 
-      columns = ("id", "nome", "sobrenome", "contato", "genero", "data_nasc")
+    self.main_frame = ttk.Frame(self)
+    self.main_frame.pack(fill=tk.BOTH, expand = True, padx=15, pady=15)
 
-      self.tree = ttk.Treeview(self.main_frame, columns = columns, show = "headings")
-      self.tree.pack(fill=tk.BOTH, expand = True)
+    columns = ("id", "nome", "sobrenome", "contato", "genero", "data_nasc")
 
-      self.tree.heading("id", text="ID", anchor = tk.W)
-      self.tree.heading("nome", text="Nome", anchor = tk.W)
-      self.tree.heading("sobrenome", text="Sobrenome", anchor = tk.W)
-      self.tree.heading("contato", text="Contato", anchor = tk.W)
-      self.tree.heading("genero", text="Genero", anchor = tk.W)
-      self.tree.heading("data_nasc", text="Data de Nascimento", anchor = tk.W)
+    self.tree = ttk.Treeview(self.main_frame, columns = columns, show = "headings")
+    self.tree.pack(fill=tk.BOTH, expand = True)
 
-      self.tree.column("id", width = 100)
-      self.tree.column("nome", width = 100)
-      self.tree.column("sobrenome", width = 100)
-      self.tree.column("contato", width = 100)
-      self.tree.column("genero", width = 100)
-      self.tree.column("data_nasc", width = 100)
+    self.tree.heading("id", text="ID", anchor = tk.W)
+    self.tree.heading("nome", text="Nome", anchor = tk.W)
+    self.tree.heading("sobrenome", text="Sobrenome", anchor = tk.W)
+    self.tree.heading("contato", text="Contato", anchor = tk.W)
+    self.tree.heading("genero", text="Genero", anchor = tk.W)
+    self.tree.heading("data_nasc", text="Data de Nascimento", anchor = tk.W)
 
-      self.preencheTreeView()
+    self.tree.column("id", width = 100)
+    self.tree.column("nome", width = 100)
+    self.tree.column("sobrenome", width = 100)
+    self.tree.column("contato", width = 100)
+    self.tree.column("genero", width = 100)
+    self.tree.column("data_nasc", width = 100)
+
+    self.preencheTreeView()
     
-    def preencheTreeView(self):
-      for cliente in self.listaClientes:
+  def preencheTreeView(self):
+    for cliente in self.listaClientes:
 
-        valores = (
-          cliente.
+      valores = (
+        cliente.id,
+        cliente.nome,
+        cliente.sobrenome,
+        cliente.contato,
+        cliente.genero,
+        cliente.data_nasc,
         )
-class LimiteMostraClientes():
-  def __init__(self, str):
-    messagebox.showinfo('Lista de alunos', str)
+
+      self.tree.insert('', tk.END, values=valores)
 
 class CtrlCliente():
   def __init__(self):
@@ -316,10 +323,7 @@ class CtrlCliente():
     self.limiteIns = LimiteInsereCliente(self)
 
   def mostraClientes(self):
-    str = 'Nome -- Sobrenome -- Contato -- Genero -- Data de Nascimento\n'
-    for cli in self.listaClientes:
-      str += cli.nome + ' -- ' + cli.sobrenome + ' -- ' + cli.contato + ' -- ' + cli.genero + ' -- ' + cli.data_nasc + '\n'
-    self.limiteLista = LimiteMostraClientes(str)
+    self.limitelista = LimiteMostraClientes(self, self.listaClientes)
 
   def enterHandler(self):
     endereco_cli = None
