@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+import tksheet
 
 class Mais40Caracteres(Exception):
   pass
@@ -265,9 +266,44 @@ class LimiteInsereCliente(tk.Toplevel):
     else:
       self.frameEndereco.grid_forget()
 
-  def mostraJanela(self, titulo, msg):
-    messagebox.showinfo(titulo, msg)
+  def mostraJanela(tk.Toplevel):
+    def __init__(self, controle, listaClientes):
+      tk.Toplevel.__init__(self)
+      self.geometry('700x400')
+      self.title("Mostrar Clientes")
+      self.controle = controle
+      self.listaClientes = listaClientes
 
+      self.main_frame = ttk.Frame(self)
+      self.main_frame.pack(fill=tk.BOTH, expand = True, padx=15, pady=15)
+
+      columns = ("id", "nome", "sobrenome", "contato", "genero", "data_nasc")
+
+      self.tree = ttk.Treeview(self.main_frame, columns = columns, show = "headings")
+      self.tree.pack(fill=tk.BOTH, expand = True)
+
+      self.tree.heading("id", text="ID", anchor = tk.W)
+      self.tree.heading("nome", text="Nome", anchor = tk.W)
+      self.tree.heading("sobrenome", text="Sobrenome", anchor = tk.W)
+      self.tree.heading("contato", text="Contato", anchor = tk.W)
+      self.tree.heading("genero", text="Genero", anchor = tk.W)
+      self.tree.heading("data_nasc", text="Data de Nascimento", anchor = tk.W)
+
+      self.tree.column("id", width = 100)
+      self.tree.column("nome", width = 100)
+      self.tree.column("sobrenome", width = 100)
+      self.tree.column("contato", width = 100)
+      self.tree.column("genero", width = 100)
+      self.tree.column("data_nasc", width = 100)
+
+      self.preencheTreeView()
+    
+    def preencheTreeView(self):
+      for cliente in self.listaClientes:
+
+        valores = (
+          cliente.
+        )
 class LimiteMostraClientes():
   def __init__(self, str):
     messagebox.showinfo('Lista de alunos', str)
