@@ -25,7 +25,7 @@ class Endereco:
   # Aqui defino um contador e inicializo como 0
   contador_id = 0
   
-  def __init__(self, estado, cidade, bairro, rua_ou_avenida, numero):
+  def __init__(self, estado, cidade, bairro, rua_ou_avenida, numero, pais):
     # Aqui eu incremento o contador a cada adição de um novo cliente
     # Como contador_id é um atributo da classe endereco
     # eu preciso usar endereco.contador_id para acessa-lo
@@ -315,6 +315,29 @@ class LimiteMostraClientes (tk.Toplevel):
 
       self.tree.insert('', tk.END, values=valores)
 
+class LimiteConsulta(tk.Toplevel):
+  def __init__(self, controle, listaClientes):
+    tk.Toplevel.__init__(self)
+    self.geometry('700x400')
+    self.title("Consultar Clientes")
+    self.controle = controle
+    self.listaClientes = listaClientes
+
+    self.main_frame = ttk.Frame(self)
+    self.main_frame.pack(fill=tk.BOTH, expand = True, padx=15, pady=15)
+
+    self.main_frame.columnconfigure(1, weight=1)
+
+    self.labelNome = ttk.Label(self.main_frame, text="Nome: ")]
+    self.labelNome.grid(row=0, column=0, sticky=tk.W, pady=5)
+    self.entryNome = ttk.Entry(self.main_frame, width=40)
+    self.entryNome.grid(row=0, column=1, sticky=tk.EW, pady=5)
+
+    self.labelTelefone = ttk.Label(self.main_frame, text="Contato: ")
+    self.labelTelefone.grid(row=1, column=0, sticky=tk.W, pady=5)
+    self.entryTelefone = ttk.Entry(self.main_frame, width=40)
+    self.entryTelefone.grid(row=1, column=1, sticky=tk.EW, pady=5)
+
 class CtrlCliente():
   def __init__(self):
     self.listaClientes = []
@@ -347,7 +370,7 @@ class CtrlCliente():
         nro = self.limiteIns.entryNro.get().strip()
 
         if cidade != '' or bairro != '' or pais != '' or rua_ou_avenida != '' or nro != '':
-          endereco_cli = Endereco(cidade, bairro, pais, rua_ou_avenida, nro)
+          endereco_cli = Endereco(estado, cidade, bairro, rua_ou_avenida, nro, pais)
     
         cliente = Cliente(nome, sobrenome, contato, genero, data_nasc, senha, endereco_cli)
         self.listaClientes.append(cliente)
