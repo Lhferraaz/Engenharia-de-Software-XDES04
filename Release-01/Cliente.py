@@ -3,8 +3,24 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
+class Mais40Caracteres(Exception):
+  pass
+
+class Mais30Caracteres(Exception):
+  pass
+
+class Mais50Caracteres(Exception):
+  pass
+
+class NaoENumero(Exception):
+  pass
+
+class CampoEmBranco(Exception):
+  pass
+
+
 # Classe Endereço
-class endereco:
+class Endereco:
   # Aqui defino um contador e inicializo como 0
   contador_id = 0
   
@@ -12,19 +28,31 @@ class endereco:
     # Aqui eu incremento o contador a cada adição de um novo cliente
     # Como contador_id é um atributo da classe endereco
     # eu preciso usar endereco.contador_id para acessa-lo
-    endereco.contador_id += 1
+    Endereco.contador_id += 1
 
     # 
-    self.__id = endereco.contador_id
+    self.__id = Endereco.contador_id
     self.__estado = estado
-    if len(cidade) < 40:
-      self.__cidade = cidade
-    self.__bairro = bairro
-    if len(rua_ou_avenida) < 40:
-      self.__rua_ou_avenida = rua_ou_avenida
+
+    if len(cidade) > 30:
+      raise Mais30Caracteres("A cidade deve ter no máximo 30 caracteres")
+      
+    self.__cidade = cidade
+
+    if len(bairro) > 30:
+      raise Mais30Caracteres("O bairro deve ter no máximo 30 caracteres")
     
-    if numero >= 0:
-      self.__numero = numero
+    self.__bairro = bairro
+
+    if len(rua_ou_avenida) > 50:
+      raise Mais50Caracteres("A rua ou avenida deve ter no máximo 50 caracteres")
+    
+    self.__rua_ou_avenida = rua_ou_avenida
+    
+    if not numero.isdigit():
+      raise NaoENumero("O campo número só aceita números")
+    
+    self.__numero = int(numero)
 
   @property
   def id(self):
@@ -58,16 +86,23 @@ class Cliente:
     Cliente.contador_id += 1
 
     self.__id = Cliente.contador_id
-    if len(nome) < 40:
-      self.__nome = nome
-    if len(sobrenome) < 40:
-      self.__sobrenome = sobrenome
+    if len(nome) > 40:
+      raise Mais40Caracteres("O nome deve ter no máximo 40 caracteres")
+    
+    self.__nome = nome
+
+    if len(sobrenome) > 40:
+      raise Mais40Caracteres("O sobrenome deve ter no máximo 40 caracteres")
+    
+    self.__sobrenome = sobrenome
 
     self.__contato = contato
     self.__genero = genero
     self.__data_nasc = data_nasc
-    if len(senha) < 40:
-      self.__senha = senha
+    if len(senha) > 40:
+      raise Mais40Caracteres("A senha deve ter no máximo 40 caracteres")
+    
+    self.__senha = senha
     self.__endereco = endereco
 
   @property
@@ -156,13 +191,18 @@ class LimiteInsereCliente(tk.Toplevel):
     separator = ttk.Separator(self.main_frame, orient ='horizontal')
     separator.grid(row = 6, column=0, columnspan=2, sticky ='ew', pady=15)
 
+    # ------ Endereço ------
+
+    # Crio um checkvar para o checkbutton
     self.checkVar = tk.BooleanVar()
+    # Inicia com o checkbutton desmarcado
     self.checkVar.set(False)
+    # Crio o checkbutton
     self.checkEndereco = ttk.Checkbutton(
-      self.main_frame,
-      text="Cadastrar Endereço",
-      variable=self.checkVar,
-      command=self.mostraCamposEndereco
+      self.main_frame, # Pai
+      text="Cadastrar Endereço", # Texto
+      variable=self.checkVar, # Atribuo o checkvar a ele
+      command=self.mostraCamposEndereco # Atribuo o comando de mostrar campos
     )
 
     self.checkEndereco.grid(row=7, column=0, columnspan=2, sticky=tk.W)
@@ -171,9 +211,14 @@ class LimiteInsereCliente(tk.Toplevel):
     self.frameEndereco.columnconfigure(1, weight=1)
 
     self.labelEstado = ttk.Label(self.frameEndereco, text="Estado: ")
-    self.labelEstado.grid(row=0, column=0, sticky=tk.W, pady=5)
-    self.entryEstado = ttk.Entry(self.frameEndereco, width=40)
-    self.entryEstado.grid(row=0, column=1, sticky=tk.EW, pady=5)
+    self.labelEstado.grid(row = 0, column=0, sticky=tk.W, pady=5)
+    self.n = tk.StringVar()
+    self.escolhaEstado = ttk.Combobox(self.frameEndereco, width = 27, textvariable=self.n)
+
+    self.escolhaEstado['values'] = ('AM',
+                               'SP',
+                               'MG')
+    self.escolhaEstado.grid(row=0, column=1, sticky=tk.EW, pady=5)
 
     self.labelCidade = ttk.Label(self.frameEndereco, text="Cidade: ")
     self.labelCidade.grid(row=1, column=0, sticky=tk.W, pady=5)
@@ -194,6 +239,14 @@ class LimiteInsereCliente(tk.Toplevel):
     self.labelNro.grid(row=4, column=0, sticky=tk.W, pady=5)
     self.entryNro = ttk.Entry(self.frameEndereco, width=40)
     self.entryNro.grid(row=4, column=1, sticky=tk.EW, pady=5)
+
+    self.labelPais = ttk.Label(self.frameEndereco, text="País: ")
+    self.labelPais.grid(row=5, column=0, sticky=tk.W, pady=5)
+    self.n2 = tk.StringVar()
+    self.escolhaPais = ttk.Combobox(self.frameEndereco, width = 27, textvariable=self.n2)
+
+    self.escolhaPais['values'] = ('Brasil')
+    self.escolhaPais.grid(row=5, column=1, sticky=tk.EW, pady=5)
 
     self.frameBotoes = ttk.Frame(self.main_frame)
     self.frameBotoes.grid(row=9, column=0, columnspan=2, sticky='e', pady=20)
@@ -232,30 +285,50 @@ class CtrlCliente():
       str += cli.nome + ' -- ' + cli.sobrenome + ' -- ' + cli.contato + ' -- ' + cli.genero + ' -- ' + cli.data_nasc + '\n'
     self.limiteLista = LimiteMostraClientes(str)
 
-  def enterHandler(self, event):
-    nome = self.limiteIns.inputNome.get()
-    sobrenome = self.limiteIns.inputSobrenome.get()
-    contato = self.limiteIns.inputContato.get()
-    genero = self.limiteIns.inputGenero.get()
-    data_nasc = self.limiteIns.inputData_nasc.get()
-    senha = self.limiteIns.inputSenha.get()
+  def enterHandler(self):
+    endereco_cli = None
 
-    if nome == '' or sobrenome == '' or contato == '' or genero == '' or data_nasc == '' or senha == '': 
-      self.limiteIns.mostraJanela('Erro', 'Preencha todos os campos')
-      return
+    try:
+        nome = self.limiteIns.inputNome.get().strip()
+        sobrenome = self.limiteIns.inputSobrenome.get().strip()
+        contato = self.limiteIns.inputContato.get().strip()
+        genero = self.limiteIns.inputGenero.get().strip()
+        data_nasc = self.limiteIns.inputData_nasc.get().strip()
+        senha = self.limiteIns.inputSenha.get().strip()
+
+        if nome == '' or sobrenome == '' or contato == '' or genero == '' or data_nasc == '' or senha == '': 
+          raise CampoEmBranco('Preencha todos os campos')
+        
+        estado = self.limiteIns.escolhaEstado.get().strip()
+        cidade = self.limiteIns.entryCidade.get().strip()
+        bairro = self.limiteIns.entryBairro.get().strip()
+        pais = self.limiteIns.escolhaPais.get().strip()
+        rua_ou_avenida = self.limiteIns.entryRua.get()
+        nro = self.limiteIns.entryNro.get().strip()
+
+        if cidade != '' or bairro != '' or pais != '' or rua_ou_avenida != '' or nro != '':
+          endereco_cli = Endereco(cidade, bairro, pais, rua_ou_avenida, nro)
     
-    cliente = Cliente(nome, sobrenome, contato, genero, data_nasc, senha)
-    self.listaClientes.append(cliente)
-    self.limiteIns.mostraJanela('Sucesso', 'Cliente cadastrado com sucesso')
-    self.clearHandler(event)
+        cliente = Cliente(nome, sobrenome, contato, genero, data_nasc, senha, endereco_cli)
+        self.listaClientes.append(cliente)
+        self.limiteIns.mostraJanela('Sucesso', 'Cliente cadastrado com sucesso')
+        self.clearHandler()
+    except(CampoEmBranco, Mais40Caracteres, Mais30Caracteres, Mais50Caracteres)  as e:
+      print(f'Erro: {e}')
 
-  def clearHandler(self, event):
+  def clearHandler(self):
     self.limiteIns.inputNome.delete(0, len(self.limiteIns.inputNome.get()))
     self.limiteIns.inputSobrenome.delete(0, len(self.limiteIns.inputSobrenome.get()))
     self.limiteIns.inputContato.delete(0, len(self.limiteIns.inputContato.get()))
     self.limiteIns.inputGenero.delete(0, len(self.limiteIns.inputGenero.get()))
     self.limiteIns.inputData_nasc.delete(0, len(self.limiteIns.inputData_nasc.get()))
     self.limiteIns.inputSenha.delete(0, len(self.limiteIns.inputSenha.get()))
+    self.limiteIns.escolhaEstado.delete(0, len(self.limiteIns.escolhaEstado.get()))
+    self.limiteIns.entryCidade.delete(0, len(self.limiteIns.entryCidade.get()))
+    self.limiteIns.entryBairro.delete(0, len(self.limiteIns.entryBairro.get()))
+    self.limiteIns.entryRua.delete(0, len(self.limiteIns.entryRua.get()))
+    self.limiteIns.entryNro.delete(0, len(self.limiteIns.entryNro.get()))
+    self.limiteIns.escolhaPais.delete(0, len(self.limiteIns.escolhaPais.get()))
 
-  def fechaHandler(self, event):
+  def fechaHandler(self):
     self.limiteIns.destroy()
