@@ -6,7 +6,7 @@ Este repositório é dedicado ao **armazenamento e versionamento dos documentos 
 
 O objetivo principal é manter um histórico claro e acessível de todas as especificações e funcionalidades definidas para o projeto.
 
-Link para o cronograma no Trello: https://trello.com/b/wgvf0PMb/engenharia-software
+Link para o cronograma no Trello: [https://trello.com/b/wgvf0PMb/engenharia-software](https://trello.com/invite/b/69076b437fa5f3b1095d4196/ATTI17e46948bf79bae119d60e485fbddec680058D9C/engenharia-software)
 
 ---
 
