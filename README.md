@@ -1,7 +1,8 @@
 # 📦 Documentação da Release 03 
 
 ## 📌 Sobre esta Release
-Esta **Release 03** representa a implementação e o teste automatizado dos últimos CRUDS da Loja Online. CRUD 05 - Pedido e CRUD 06 - Método de Pagamento
+
+* Esta **Release 03** representa a implementação e o teste automatizado dos últimos CRUDS da Loja Online. CRUD 05 - Pedido e CRUD 06 - Método de Pagamento
 ---
 
 ## 📄 Conteúdo da Documentação (Release 03)
