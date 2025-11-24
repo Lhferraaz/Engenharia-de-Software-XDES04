@@ -16,4 +16,6 @@ Link para o cronograma no Trello: [https://trello.com/b/wgvf0PMb/engenharia-soft
 
 **Release-01**: Implementação e teste automatizado do CRUD1(Clientes) e CRUD2(Produtos)
 
-**Release-02**: Implementação e teste automatizado do CRUD2(Fornecedor) e CRUD4(Promoção)
+**Release-02**: Implementação e teste automatizado do CRUD3(Fornecedor) e CRUD4(Promoção)
+
+**Release-03**: Implementação e teste automatizado do CRUD5(Pedido) e CRUD6(Método de Pagamento)
