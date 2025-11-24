@@ -5,7 +5,7 @@
 * Esta **Release 01** representa a implementação e o teste automatizado dos primeiros CRUDS da Loja Online. CRUD 01 - Cliente e CRUD 02 - Produto
 ---
 
-## 📄 Conteúdo da Documentação (Release 03)
+## 📄 Conteúdo da Documentação (Release 01)
 
 | Documento / Arquivo | Tipo |
 | :--- | :--- |
