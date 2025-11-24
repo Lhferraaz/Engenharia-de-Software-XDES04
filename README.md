@@ -5,7 +5,7 @@
 * Esta **Release 02** representa a implementação e o teste automatizado dos CRUDS 03 e 04 da Loja Online. CRUD 04 - Fornecedor e CRUD 05 - Promoção
 ---
 
-## 📄 Conteúdo da Documentação (Release 03)
+## 📄 Conteúdo da Documentação (Release 02)
 
 | Documento / Arquivo | Tipo |
 | :--- | :--- |
